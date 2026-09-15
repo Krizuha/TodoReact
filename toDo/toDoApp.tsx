@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TextInput,
   Button,
+  Alert,
 } from 'react-native';
 import { ToDoList } from './toDoList';
 
@@ -51,14 +52,33 @@ export const ToDoApp = () => {
   };
 
   const handleDelete = (taskId: number) => {
-    setTasks(tasks.filter((task) => task.id !== taskId));
-    if (id === taskId) resetForm();
+    Alert.alert(
+            'Xác nhận xóa',
+            'Bạn có chắc chắn muốn xóa công việc này không?',
+            [
+                {
+                    text: 'Hủy',
+                    style: 'cancel',
+                },
+                {
+                    text: 'Xóa',
+                    style: 'destructive',
+                    onPress: () => {
+                        // Thực hiện xóa công việc ở đây
+                          setTasks(tasks.filter((task) => task.id !== taskId));
+                          if (id === taskId) resetForm();
+                        console.log('Công việc đã được xóa');
+                    },
+                },
+            ]
+        );
+
   };
 
   const resetForm = () => {
-    setId(null);
-    setName('');
-    setPhone('');
+      setId(null);
+        setName('');
+      setPhone('');
   };
 
   return (
